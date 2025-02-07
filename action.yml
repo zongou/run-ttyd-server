@@ -1,0 +1,78 @@
+name: Run ttyd server
+description: Runs a ttyd server for diagnostics
+author: zongou
+
+branding:
+  icon: "code"
+  color: "yellow"
+
+runs:
+  using: composite
+
+  steps:
+    - name: Download resources
+      shell: bash
+      run: |
+        INSTALL_DIR="${{ runner.temp }}/run-ttyd-server"
+        INSTALL_DIR_FORMATTED=${INSTALL_DIR}
+        if [[ "${{ runner.os }}" == "Windows" ]]; then
+          INSTALL_DIR_FORMATTED=$(cygpath -w ${INSTALL_DIR})
+        fi
+        echo "Using install dir ${INSTALL_DIR}"
+        echo ${INSTALL_DIR_FORMATTED} >> $GITHUB_PATH
+
+        rm -rf ${INSTALL_DIR}
+        mkdir -p ${INSTALL_DIR}
+        cd ${INSTALL_DIR}
+
+        echo "Downloading cloudflared"
+
+        CLOUDFLARED_VERSION=$(curl -s -S -H "Authorization: Bearer ${{ github.token }}" https://api.github.com/repos/cloudflare/cloudflared/releases | jq -r .[0].tag_name)
+
+        case $(uname -m) in
+        aarch64 | arm64) CLOUDFLARED_ARCH=arm64 ;;
+        x86_64) CLOUDFLARED_ARCH=amd64;;
+        *) echo "Unsupported architecture" && exit 1 ;;
+        esac
+
+        case ${{ runner.os }} in
+        Linux) curl -LkSs https://github.com/cloudflare/cloudflared/releases/download/${CLOUDFLARED_VERSION}/cloudflared-linux-${CLOUDFLARED_ARCH} > cloudflared  && chmod +x cloudflared;;
+        Windows) curl -LkSs https://github.com/cloudflare/cloudflared/releases/download/${CLOUDFLARED_VERSION}/cloudflared-windows-${CLOUDFLARED_ARCH}.exe > cloudflared.exe ;;
+        macOS) curl -LkSs https://github.com/cloudflare/cloudflared/releases/download/${CLOUDFLARED_VERSION}/cloudflared-darwin-${CLOUDFLARED_ARCH}.tgz | gzip -d | tar -x ;;
+        esac
+
+        echo "Downloading ttyd"
+
+        TTYD_VERSION=$(curl -s -S -H "Authorization: Bearer ${{ github.token }}" https://api.github.com/repos/zongou/ttyd/releases | jq -r .[0].tag_name)
+
+        case ${{ runner.os }} in
+        Linux) 
+          case $(uname -m) in
+          aarch64 | arm64) TTYD_ARCH_ARCH=aarch64 ;;
+          x86_64) TTYD_ARCH=x86_64;;
+          *) echo "Unsupported architecture" && exit 1 ;;
+          esac
+          curl -LkSs https://github.com/zongou/ttyd/releases/download/${TTYD_VERSION}/ttyd.${TTYD_ARCH} > cloudflared  && chmod +x cloudflared
+          ;;
+        Windows) 
+          case $(uname -m) in
+          aarch64 | arm64) TTYD_ARCH_ARCH=aarch64 ;;
+          x86_64) TTYD_ARCH=msvc;;
+          x86) TTYD_ARCH=win32;;
+          *) echo "Unsupported architecture" && exit 1 ;;
+          esac
+          curl -LkSs https://github.com/zongou/ttyd/releases/download/${TTYD_VERSION}/ttyd.${TTYD_ARCH}.exe > ttyd.exe
+          ;;
+        # macOS)  curl -LkSs https://github.com/zongou/ttyd/releases/download/${TTYD_VERSION}/ttyd.${TTYD_ARCH} > cloudflared  && chmod +x cloudflared;;
+        esac
+
+    - name: Verify downloaded resources
+      run: |
+        ttyd --version
+        cloudflared --version
+
+    - name: Run ttyd server
+      shell: bash
+      run: |
+        ttyd -W bash -l &
+        cloudflared tunnel --url localhost:7681 || true
