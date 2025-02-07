@@ -1,0 +1,19 @@
+name: Test
+on:
+  # push:
+  #   paths:
+  #     - .github/workflows/test.yml
+  #     - action.yml
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: Test on ${{ matrix.runner }}
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      fail-fast: false
+      matrix:
+        runner: [ubuntu-latest, ubuntu-latest-arm, windows-latest]
+    steps:
+    - uses: actions/checkout@v7
+    - uses: ./
