@@ -52,7 +52,7 @@ runs:
           x86_64) TTYD_ARCH=x86_64;;
           *) echo "Unsupported architecture" && exit 1 ;;
           esac
-          curl -LkSs https://github.com/zongou/ttyd/releases/download/${TTYD_VERSION}/ttyd.${TTYD_ARCH} > cloudflared  && chmod +x cloudflared
+          curl -LkSs https://github.com/zongou/ttyd/releases/download/${TTYD_VERSION}/ttyd.${TTYD_ARCH} > ttyd  && chmod +x ttyd
           ;;
         Windows) 
           case $(uname -m) in
@@ -63,7 +63,7 @@ runs:
           esac
           curl -LkSs https://github.com/zongou/ttyd/releases/download/${TTYD_VERSION}/ttyd.${TTYD_ARCH}.exe > ttyd.exe
           ;;
-        # macOS)  curl -LkSs https://github.com/zongou/ttyd/releases/download/${TTYD_VERSION}/ttyd.${TTYD_ARCH} > cloudflared  && chmod +x cloudflared;;
+        # macOS)  curl -LkSs https://github.com/zongou/ttyd/releases/download/${TTYD_VERSION}/ttyd.${TTYD_ARCH} > ttyd  && chmod +x ttyd;;
         esac
 
     - name: Verify downloaded resources
