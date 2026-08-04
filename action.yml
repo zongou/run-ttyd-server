@@ -48,7 +48,7 @@ runs:
         case ${{ runner.os }} in
         Linux) 
           case $(uname -m) in
-          aarch64 | arm64) TTYD_ARCH_ARCH=aarch64 ;;
+          aarch64 | arm64) TTYD_ARCH=aarch64 ;;
           x86_64) TTYD_ARCH=x86_64;;
           *) echo "Unsupported architecture" && exit 1 ;;
           esac
@@ -56,7 +56,7 @@ runs:
           ;;
         Windows) 
           case $(uname -m) in
-          aarch64 | arm64) TTYD_ARCH_ARCH=aarch64 ;;
+          aarch64 | arm64) TTYD_ARCH=aarch64 ;;
           x86_64) TTYD_ARCH=msvc;;
           x86) TTYD_ARCH=win32;;
           *) echo "Unsupported architecture" && exit 1 ;;
