@@ -67,6 +67,7 @@ runs:
         esac
 
     - name: Verify downloaded resources
+      shell: bash
       run: |
         ttyd --version
         cloudflared --version
