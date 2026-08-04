@@ -75,5 +75,5 @@ runs:
     - name: Run ttyd server
       shell: bash
       run: |
-        ttyd -W bash -l &
+        ttyd -W bash &
         cloudflared tunnel --url localhost:7681 || true
