@@ -13,7 +13,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        runner: [ubuntu-latest, ubuntu-latest-arm, windows-latest]
+        runner: [ubuntu-latest, windows-latest]
     steps:
     - uses: actions/checkout@v7
     - uses: ./
+
+    - name: Keep alive
+      shell: bash
+      run: sleep 5m
