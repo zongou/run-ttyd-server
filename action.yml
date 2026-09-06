@@ -106,7 +106,7 @@ runs:
       run: |
         if test -n ${{ inputs.credential }}; then
           nohup ttyd \
-            --credential ${{ inputs.credential }}
+            --credential ${{ inputs.credential }} \
             --port ${PORT} \
             --client-option enableZmodem=${{ inputs.enableZmodem }} \
             --client-option enableTrzsz=${{ inputs.enableTrzsz }} \
