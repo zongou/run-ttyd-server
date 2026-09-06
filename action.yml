@@ -110,7 +110,7 @@ runs:
             --port ${PORT} \
             --client-option enableZmodem=${{ inputs.enableZmodem }} \
             --client-option enableTrzsz=${{ inputs.enableTrzsz }} \
-            --client-option enableSixel=${ inputs.enableSixel } \
+            --client-option enableSixel=${{ inputs.enableSixel }} \
             --writable bash -l > "${TTYD_LOG}" 2>&1 &
           nohup cloudflared tunnel --url localhost:${PORT} > "${CLOUDFLARED_LOG}" 2>&1 &
 
