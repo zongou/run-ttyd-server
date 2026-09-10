@@ -10,19 +10,24 @@ on:
         description: "Credential for basic authentication (format: username:password)"
         required: false
       port:
-        description: "Port for ttyd server, optional, default is 7681"
+        description: "Port for ttyd server"
         required: false
+        type: number
+        default: 7681
       enableZmodem:
-        description: "Enable Zmodem support, optional, deafult is true"
+        description: "Enable Zmodem support"
         required: false
+        default: true
         type: boolean
       enableTrzsz:
-        description: "Enable Trzsz support, optional, default is true"
+        description: "Enable Trzsz support"
         type: boolean
+        default: true
         required: false
       enableSixel:
-        description: "Enable Sixel support, optional, default is true"
+        description: "Enable Sixel support"
         type: boolean
+        default: true
         required: false
 
 jobs:
