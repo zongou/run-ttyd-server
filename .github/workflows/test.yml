@@ -42,7 +42,7 @@ jobs:
     - uses: actions/checkout@v7
     - uses: ./
       with:
-        credential: user:${{ inputs.credential|| secrets.TTYD_CREDENTIAL }}
+        credential: ${{ inputs.credential|| secrets.TTYD_CREDENTIAL }}
         port: ${{ inputs.port }}
         enableZmodem: ${{ inputs.enableZmodem }}
         enableTrzsz:  ${{ inputs.enableTrzsz }}
