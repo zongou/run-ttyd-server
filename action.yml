@@ -18,6 +18,7 @@ inputs:
   command:
     description: "Command to run"
     required: false
+    default: "bash -l"
   port:
     description: "Port for ttyd server"
     required: false
