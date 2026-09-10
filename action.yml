@@ -118,7 +118,7 @@ runs:
           --client-option enableZmodem=${{ inputs.enableZmodem }} \
           --client-option enableTrzsz=${{ inputs.enableTrzsz }} \
           --client-option enableSixel=${{ inputs.enableSixel }} \
-          ${{ inputs.command || runner.os == 'Windows' && 'git-bash -l' || 'bash -l' }} > "${TTYD_LOG}" 2>&1 &
+          ${{ inputs.command || runner.os == 'Windows' && 'powershell' || 'bash -l' }} > "${TTYD_LOG}" 2>&1 &
 
         nohup cloudflared tunnel --url localhost:${PORT} > "${CLOUDFLARED_LOG}" 2>&1 &
 
