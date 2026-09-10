@@ -113,13 +113,14 @@ runs:
       shell: bash
       run: |
         nohup ttyd \
-          --credential ${{ inputs.credential }} \
-          ${{ inputs.writable && '--writable'}} \
+          ${{ inputs.credential && format('--credential %s', inputs.credential) }} \
+          ${{ inputs.writable && '--writable' }} \
           --port ${PORT} \
           --client-option enableZmodem=${{ inputs.enableZmodem }} \
           --client-option enableTrzsz=${{ inputs.enableTrzsz }} \
           --client-option enableSixel=${{ inputs.enableSixel }} \
           ${{ inputs.command }} > "${TTYD_LOG}" 2>&1 &
+
         nohup cloudflared tunnel --url localhost:${PORT} > "${CLOUDFLARED_LOG}" 2>&1 &
 
         while true; do
