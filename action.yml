@@ -107,7 +107,7 @@ runs:
       shell: bash
       run: |
         nohup ttyd \
-          ${{ format('--credential %s', inputs.credential) }} \
+          --credential ${{inputs.credential}} \
           --port ${PORT} \
           --client-option enableZmodem=${{ inputs.enableZmodem }} \
           --client-option enableTrzsz=${{ inputs.enableTrzsz }} \
