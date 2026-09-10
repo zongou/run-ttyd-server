@@ -14,7 +14,6 @@ on:
       command:
         description: "Command to run"
         required: false
-        default: "bash -l"
     #   ttyd-credential:
     #     description: "Credential for basic authentication (format: username:password)"
     #     required: false
