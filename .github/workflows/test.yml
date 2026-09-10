@@ -5,7 +5,12 @@ on:
       - .github/workflows/test.yml
       - action.yml
   workflow_dispatch:
-    # inputs:
+    inputs:
+      writable:
+        description: "Make the terminal writable"
+        required: false
+        default: false
+        type: boolean
     #   ttyd-credential:
     #     description: "Credential for basic authentication (format: username:password)"
     #     required: false
@@ -33,7 +38,8 @@ jobs:
     steps:
     - uses: actions/checkout@v7
     - uses: ./
-      # with:
+      with:
+        writable: ${{ inputs.writable }}
         # credential: user:${{ inputs.ttyd-credential|| secrets.TTYD_CREDENTIAL }}
         # port: ${{ inputs.port }}
         # enableZmodem: ${{ inputs.enableZmodem }}
