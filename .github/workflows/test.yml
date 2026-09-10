@@ -15,11 +15,14 @@ on:
       enableZmodem:
         description: "Enable Zmodem support, optional, deafult is true"
         required: false
+        type: boolean
       enableTrzsz:
         description: "Enable Trzsz support, optional, default is true"
+        type: boolean
         required: false
       enableSixel:
         description: "Enable Sixel support, optional, default is true"
+        type: boolean
         required: false
 
 jobs:
