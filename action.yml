@@ -9,8 +9,16 @@ branding:
 inputs:
   credential:
     description: "Credential for basic authentication (format: username:password)"
-    required: true
+    required: false
     default: ""
+  writable:
+    description: "Make the terminal writable"
+    required: false
+    default: false
+  command:
+    description: "Command to run"
+    required: false
+    default: "bash -l"
   port:
     description: "Port for ttyd server"
     required: false
@@ -107,11 +115,12 @@ runs:
         if test -n ${{ inputs.credential }}; then
           nohup ttyd \
             --credential ${{ inputs.credential }} \
+            ${{ inputs.writable && '--writable'}} \
             --port ${PORT} \
             --client-option enableZmodem=${{ inputs.enableZmodem }} \
             --client-option enableTrzsz=${{ inputs.enableTrzsz }} \
             --client-option enableSixel=${{ inputs.enableSixel }} \
-            --writable bash -l > "${TTYD_LOG}" 2>&1 &
+            ${{ inputs.command}} > "${TTYD_LOG}" 2>&1 &
           nohup cloudflared tunnel --url localhost:${PORT} > "${CLOUDFLARED_LOG}" 2>&1 &
 
           while true; do

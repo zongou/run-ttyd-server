@@ -1,26 +1,26 @@
 name: Test
 on:
-  # push:
-  #   paths:
-  #     - .github/workflows/test.yml
-  #     - action.yml
+  push:
+    paths:
+      - .github/workflows/test.yml
+      - action.yml
   workflow_dispatch:
-    inputs:
-      ttyd-credential:
-        description: "Credential for basic authentication (format: username:password)"
-        required: false
-      port:
-        description: "Port for ttyd server, optional, default is 7681"
-        required: false
-      enableZmodem:
-        description: "Enable Zmodem support, optional, deafult is true"
-        required: false
-      enableTrzsz:
-        description: "Enable Trzsz support, optional, default is true"
-        required: false
-      enableSixel:
-        description: "Enable Sixel support, optional, default is true"
-        required: false
+    # inputs:
+    #   ttyd-credential:
+    #     description: "Credential for basic authentication (format: username:password)"
+    #     required: false
+    #   port:
+    #     description: "Port for ttyd server, optional, default is 7681"
+    #     required: false
+    #   enableZmodem:
+    #     description: "Enable Zmodem support, optional, deafult is true"
+    #     required: false
+    #   enableTrzsz:
+    #     description: "Enable Trzsz support, optional, default is true"
+    #     required: false
+    #   enableSixel:
+    #     description: "Enable Sixel support, optional, default is true"
+    #     required: false
 
 jobs:
   test:
@@ -33,12 +33,12 @@ jobs:
     steps:
     - uses: actions/checkout@v7
     - uses: ./
-      with:
-        credential: user:${{ inputs.ttyd-credential|| secrets.TTYD_CREDENTIAL }}
-        port: ${{ inputs.port }}
-        enableZmodem: ${{ inputs.enableZmodem }}
-        enableTrzsz:  ${{ inputs.enableTrzsz }}
-        enableSixel: ${{ inputs.enableSixel }}
+      # with:
+        # credential: user:${{ inputs.ttyd-credential|| secrets.TTYD_CREDENTIAL }}
+        # port: ${{ inputs.port }}
+        # enableZmodem: ${{ inputs.enableZmodem }}
+        # enableTrzsz:  ${{ inputs.enableTrzsz }}
+        # enableSixel: ${{ inputs.enableSixel }}
 
     - name: Keep alive
       shell: bash
