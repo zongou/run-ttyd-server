@@ -14,21 +14,21 @@ on:
       command:
         description: "Command to run"
         required: false
-    #   ttyd-credential:
-    #     description: "Credential for basic authentication (format: username:password)"
-    #     required: false
-    #   port:
-    #     description: "Port for ttyd server, optional, default is 7681"
-    #     required: false
-    #   enableZmodem:
-    #     description: "Enable Zmodem support, optional, deafult is true"
-    #     required: false
-    #   enableTrzsz:
-    #     description: "Enable Trzsz support, optional, default is true"
-    #     required: false
-    #   enableSixel:
-    #     description: "Enable Sixel support, optional, default is true"
-    #     required: false
+      credential:
+        description: "Credential for basic authentication (format: username:password)"
+        required: false
+      port:
+        description: "Port for ttyd server, optional, default is 7681"
+        required: false
+      enableZmodem:
+        description: "Enable Zmodem support, optional, deafult is true"
+        required: false
+      enableTrzsz:
+        description: "Enable Trzsz support, optional, default is true"
+        required: false
+      enableSixel:
+        description: "Enable Sixel support, optional, default is true"
+        required: false
 
 jobs:
   test:
@@ -44,11 +44,11 @@ jobs:
       with:
         writable: ${{ inputs.writable }}
         command: ${{ inputs.command }}
-        # credential: user:${{ inputs.ttyd-credential|| secrets.TTYD_CREDENTIAL }}
-        # port: ${{ inputs.port }}
-        # enableZmodem: ${{ inputs.enableZmodem }}
-        # enableTrzsz:  ${{ inputs.enableTrzsz }}
-        # enableSixel: ${{ inputs.enableSixel }}
+        credential: user:${{ inputs.credential|| secrets.TTYD_CREDENTIAL }}
+        port: ${{ inputs.port }}
+        enableZmodem: ${{ inputs.enableZmodem }}
+        enableTrzsz:  ${{ inputs.enableTrzsz }}
+        enableSixel: ${{ inputs.enableSixel }}
 
     - name: Keep alive
       shell: bash

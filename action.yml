@@ -9,12 +9,7 @@ branding:
 inputs:
   credential:
     description: "Credential for basic authentication (format: username:password)"
-    required: false
-    default: ""
-  writable:
-    description: "Make the terminal writable"
-    required: false
-    default: false
+    required: true
   command:
     description: "Command to run"
     required: false
@@ -112,8 +107,7 @@ runs:
       shell: bash
       run: |
         nohup ttyd \
-          ${{ inputs.credential && format('--credential %s', inputs.credential) || '' }} \
-          ${{ inputs.writable == 'true' && '--writable' || '' }} \
+          ${{ format('--credential %s', inputs.credential) }} \
           --port ${PORT} \
           --client-option enableZmodem=${{ inputs.enableZmodem }} \
           --client-option enableTrzsz=${{ inputs.enableTrzsz }} \
