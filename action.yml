@@ -10,9 +10,6 @@ inputs:
   credential:
     description: "Credential for basic authentication (format: username:password)"
     required: true
-  command:
-    description: "Command to run"
-    required: false
   port:
     description: "Port for ttyd server"
     required: false
@@ -109,11 +106,12 @@ runs:
         nohup ttyd \
           --credential ${{inputs.credential}} \
           --writable \
+          --url-arg \
           --port ${PORT} \
           --client-option enableZmodem=${{ inputs.enableZmodem }} \
           --client-option enableTrzsz=${{ inputs.enableTrzsz }} \
           --client-option enableSixel=${{ inputs.enableSixel }} \
-          ${{ inputs.command || runner.os == 'Windows' && 'powershell' || 'bash -l' }} > "${TTYD_LOG}" 2>&1 &
+          ${{ inputs.command || runner.os == 'Windows' && 'powershell' || 'env' }} > "${TTYD_LOG}" 2>&1 &
 
         nohup cloudflared tunnel --url localhost:${PORT} > "${CLOUDFLARED_LOG}" 2>&1 &
 
