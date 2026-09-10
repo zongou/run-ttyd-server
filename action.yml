@@ -108,6 +108,7 @@ runs:
       run: |
         nohup ttyd \
           --credential ${{inputs.credential}} \
+          --writable \
           --port ${PORT} \
           --client-option enableZmodem=${{ inputs.enableZmodem }} \
           --client-option enableTrzsz=${{ inputs.enableTrzsz }} \
