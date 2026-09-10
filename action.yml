@@ -112,8 +112,8 @@ runs:
       shell: bash
       run: |
         nohup ttyd \
-          ${{ inputs.credential && format('--credential %s', inputs.credential) }} \
-          ${{ inputs.writable == 'true' && '--writable' }} \
+          ${{ inputs.credential && format('--credential %s', inputs.credential) || '' }} \
+          ${{ inputs.writable == 'true' && '--writable' || '' }} \
           --port ${PORT} \
           --client-option enableZmodem=${{ inputs.enableZmodem }} \
           --client-option enableTrzsz=${{ inputs.enableTrzsz }} \
