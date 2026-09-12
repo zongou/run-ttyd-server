@@ -108,24 +108,19 @@ runs:
       env: 
         TTYD_LOG: ${{ runner.temp }}/ttyd.log
         CLOUDFLARED_LOG: ${{ runner.temp }}/cloudflared.log
-        PORT: ${{ inputs.port }}
       shell: bash
       run: |
-        # check if bash is available
-        command -v bash
-        realpath $(command -v bash)
-
         nohup ttyd \
           --credential ${{ inputs.credential }} \
           --writable \
           ${{ inputs.enableUrlArg && '--url-arg' || '' }} \
-          --port ${PORT} \
+          --port ${{ inputs.port }} \
           --client-option enableZmodem=${{ inputs.enableZmodem }} \
           --client-option enableTrzsz=${{ inputs.enableTrzsz }} \
           --client-option enableSixel=${{ inputs.enableSixel }} \
-          ${{ inputs.command || runner.os == 'Windows' && 'powershell' || 'env' }} > "${TTYD_LOG}" 2>&1 &
+          ${{ inputs.command }} > "${TTYD_LOG}" 2>&1 &
 
-        nohup cloudflared tunnel --url localhost:${PORT} > "${CLOUDFLARED_LOG}" 2>&1 &
+        nohup cloudflared tunnel --url localhost:${{ inputs.port }} > "${CLOUDFLARED_LOG}" 2>&1 &
 
         while true; do
             if cat "${CLOUDFLARED_LOG}" | grep -Eo "https://.+\.trycloudflare\.com"; then
