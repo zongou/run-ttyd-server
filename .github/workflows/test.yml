@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       credential:
-        description: "Credential for basic authentication (format: username:password)"
+        description: "username:password"
         required: false
       writable:
         description: "Enable writable mode"
@@ -62,9 +62,10 @@ jobs:
 
     - uses: ./
       with:
+        credential: ${{ inputs.credential|| secrets.TTYD_CREDENTIAL }}
+        writable: ${{ inputs.writable }}
         command: ${{ inputs.command }}
         enableUrlArg: ${{ inputs.enableUrlArg }}
-        credential: ${{ inputs.credential|| secrets.TTYD_CREDENTIAL }}
         port: ${{ inputs.port }}
         enableZmodem: ${{ inputs.enableZmodem }}
         enableTrzsz:  ${{ inputs.enableTrzsz }}
