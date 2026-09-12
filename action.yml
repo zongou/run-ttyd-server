@@ -10,6 +10,14 @@ inputs:
   credential:
     description: "Credential for basic authentication (format: username:password)"
     required: true
+  command:
+    description: "Command to run"
+    required: false
+    default: ${{ runner.os == 'Windows' && 'powershell' || 'bash' }}
+  enableUrlArg:
+    description: "Enable URL argument"
+    required: false
+    default: false
   port:
     description: "Port for ttyd server"
     required: false
@@ -103,10 +111,14 @@ runs:
         PORT: ${{ inputs.port }}
       shell: bash
       run: |
+        # check if bash is available
+        command -v bash
+        realpath $(command -v bash)
+
         nohup ttyd \
           --credential ${{ inputs.credential }} \
           --writable \
-          --url-arg \
+          ${{ inputs.enableUrlArg && '--url-arg' || '' }} \
           --port ${PORT} \
           --client-option enableZmodem=${{ inputs.enableZmodem }} \
           --client-option enableTrzsz=${{ inputs.enableTrzsz }} \

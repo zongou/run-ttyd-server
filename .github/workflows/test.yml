@@ -9,6 +9,16 @@ on:
       credential:
         description: "Credential for basic authentication (format: username:password)"
         required: false
+      command:
+        description: "Command to run"
+        required: false
+        default: ""
+        type: string
+      enableUrlArg:
+        description: "Enable URL argument"
+        required: false
+        default: false
+        type: boolean
       port:
         description: "Port for ttyd server"
         required: false
@@ -42,6 +52,8 @@ jobs:
     - uses: actions/checkout@v7
     - uses: ./
       with:
+        command: ${{ inputs.command }}
+        enableUrlArg: ${{ inputs.enableUrlArg }}
         credential: ${{ inputs.credential|| secrets.TTYD_CREDENTIAL }}
         port: ${{ inputs.port }}
         enableZmodem: ${{ inputs.enableZmodem }}
