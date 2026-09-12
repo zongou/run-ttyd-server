@@ -63,7 +63,7 @@ jobs:
 
     - uses: ./
       with:
-        credential: ${{ inputs.credential || secrets.TTYD_CREDENTIAL }}
+        credential: ${{ inputs.credential != '' && inputs.credential || secrets.TTYD_CREDENTIAL }}
 
     - name: Keep alive
       shell: bash
