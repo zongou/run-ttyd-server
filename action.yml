@@ -10,6 +10,7 @@ inputs:
   credential:
     description: "username:password"
     required: true
+    type: string
   writable:
     description: "Enable writable mode"
     required: false
@@ -19,6 +20,7 @@ inputs:
     description: "Command to run"
     required: false
     default: ""
+    type: string
   enableUrlArg:
     description: "Enable URL argument"
     required: false
