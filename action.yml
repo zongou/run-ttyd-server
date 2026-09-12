@@ -42,7 +42,7 @@ runs:
     - name: Check inputs
       shell: bash
       run: |
-        echo "inputs: ${{ inputs }}"
+        echo '${{ toJSON(inputs) }}'
 
     - name: Setup install dir
       shell: bash

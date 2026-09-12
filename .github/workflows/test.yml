@@ -53,8 +53,8 @@ jobs:
 
     - name: Check inputs
       run: |
-        echo "inputs: ${{ inputs }}"
-        
+        echo '${{ toJSON(inputs) }}'
+
     - uses: ./
       with:
         command: ${{ inputs.command }}
