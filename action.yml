@@ -10,6 +10,11 @@ inputs:
   credential:
     description: "Credential for basic authentication (format: username:password)"
     required: true
+  writable:
+    description: "Enable writable mode"
+    required: false
+    default: true
+    type: boolean
   command:
     description: "Command to run"
     required: false
@@ -120,7 +125,7 @@ runs:
       run: |
         nohup ttyd \
           --credential ${{ inputs.credential }} \
-          --writable \
+          ${{ inputs.writable == 'false' && '' || '--writable' }} \
           ${{ inputs.enableUrlArg == 'true' && '--url-arg' || '' }} \
           --port ${PORT} \
           --client-option enableZmodem=${{ inputs.enableZmodem == 'false' && 'false' || 'true' }} \

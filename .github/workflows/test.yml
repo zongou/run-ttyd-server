@@ -9,6 +9,11 @@ on:
       credential:
         description: "Credential for basic authentication (format: username:password)"
         required: false
+      writable:
+        description: "Enable writable mode"
+        required: false
+        default: true
+        type: boolean
       command:
         description: "Command to run"
         required: false
