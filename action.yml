@@ -55,6 +55,7 @@ runs:
       shell: bash
       run: |
         echo '${{ toJSON(inputs) }}'
+        echo $0
 
     - name: Setup install dir
       shell: bash
