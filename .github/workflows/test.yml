@@ -8,7 +8,7 @@ on:
     inputs:
       credential:
         description: "username:password"
-        required: true
+        required: false
       writable:
         description: "Enable writable mode"
         required: false
