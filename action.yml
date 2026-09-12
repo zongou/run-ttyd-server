@@ -39,6 +39,11 @@ runs:
   using: composite
 
   steps:
+    - name: Check inputs
+      shell: bash
+      run: |
+        echo "inputs: ${{ inputs }}"
+
     - name: Setup install dir
       shell: bash
       run: |

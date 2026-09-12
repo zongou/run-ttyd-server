@@ -50,6 +50,11 @@ jobs:
         runner: [ubuntu-latest, windows-latest]
     steps:
     - uses: actions/checkout@v7
+
+    - name: Check inputs
+      run: |
+        echo "inputs: ${{ inputs }}"
+        
     - uses: ./
       with:
         command: ${{ inputs.command }}
