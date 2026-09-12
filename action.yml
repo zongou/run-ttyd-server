@@ -13,7 +13,7 @@ inputs:
   command:
     description: "Command to run"
     required: false
-    default: env
+    default: ${{ runner.os == 'Windows' && 'powershell' || 'bash' }}
   enableUrlArg:
     description: "Enable URL argument"
     required: false
@@ -109,23 +109,26 @@ runs:
         fi
         ttyd --version
 
+    # When action triggered by push event, inputs object is empty, we need to set default vaule
+    # When action triggered by workflow_dispatch event, inputs object is not empty
     - name: Run ttyd server
-      env: 
+      env:
         TTYD_LOG: ${{ runner.temp }}/ttyd.log
         CLOUDFLARED_LOG: ${{ runner.temp }}/cloudflared.log
+        PORT: ${{ inputs.port || '7891' }}
       shell: bash
       run: |
         nohup ttyd \
           --credential ${{ inputs.credential }} \
           --writable \
-          ${{ inputs.enableUrlArg && '--url-arg' || '' }} \
-          --port ${{ inputs.port }} \
-          --client-option enableZmodem=${{ inputs.enableZmodem }} \
-          --client-option enableTrzsz=${{ inputs.enableTrzsz }} \
-          --client-option enableSixel=${{ inputs.enableSixel }} \
-          ${{ inputs.command }} > "${TTYD_LOG}" 2>&1 &
+          ${{ inputs.enableUrlArg == 'true' && '--url-arg' || '' }} \
+          --port ${PORT} \
+          --client-option enableZmodem=${{ inputs.enableZmodem == 'false' && 'false' || 'true' }} \
+          --client-option enableTrzsz=${{ inputs.enableTrzsz == 'false' && 'false' || 'true' }} \
+          --client-option enableSixel=${{ inputs.enableSixel == 'false' && 'false' || 'true' }} \
+          ${{ inputs.command || runner.os == 'Windows' && 'powershell' || 'bash' }} > "${TTYD_LOG}" 2>&1 &
 
-        nohup cloudflared tunnel --url localhost:${{ inputs.port }} > "${CLOUDFLARED_LOG}" 2>&1 &
+        nohup cloudflared tunnel --url localhost:${PORT} > "${CLOUDFLARED_LOG}" 2>&1 &
 
         while true; do
             if cat "${CLOUDFLARED_LOG}" | grep -Eo "https://.+\.trycloudflare\.com"; then

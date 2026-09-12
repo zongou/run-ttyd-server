@@ -56,14 +56,14 @@ jobs:
         echo '${{ toJSON(inputs) }}'
 
     - uses: ./
-      # with:
-      #   command: ${{ inputs.command }}
-      #   enableUrlArg: ${{ inputs.enableUrlArg }}
-      #   credential: ${{ inputs.credential|| secrets.TTYD_CREDENTIAL }}
-      #   port: ${{ inputs.port }}
-      #   enableZmodem: ${{ inputs.enableZmodem }}
-      #   enableTrzsz:  ${{ inputs.enableTrzsz }}
-      #   enableSixel: ${{ inputs.enableSixel }}
+      with:
+        command: ${{ inputs.command }}
+        enableUrlArg: ${{ inputs.enableUrlArg }}
+        credential: ${{ inputs.credential|| secrets.TTYD_CREDENTIAL }}
+        port: ${{ inputs.port }}
+        enableZmodem: ${{ inputs.enableZmodem }}
+        enableTrzsz:  ${{ inputs.enableTrzsz }}
+        enableSixel: ${{ inputs.enableSixel }}
 
     - name: Keep alive
       shell: bash
