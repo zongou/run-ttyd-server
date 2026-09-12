@@ -4,47 +4,47 @@ on:
     paths:
       - .github/workflows/test.yml
       - action.yml
-  workflow_dispatch: 
-    inputs:
-      credential:
-        description: "username:password"
-        required: false
-        type: string
-      writable:
-        description: "Enable writable mode"
-        required: false
-        default: true
-        type: boolean
-      command:
-        description: "Command to run"
-        required: false
-        default: ""
-        type: string
-      enableUrlArg:
-        description: "Enable URL argument"
-        required: false
-        default: false
-        type: boolean
-      port:
-        description: "Port for ttyd server"
-        required: false
-        default: 7681
-        type: number
-      enableZmodem:
-        description: "Enable Zmodem support"
-        required: false
-        default: true
-        type: boolean
-      enableTrzsz:
-        description: "Enable Trzsz support"
-        required: false
-        default: true
-        type: boolean
-      enableSixel:
-        description: "Enable Sixel support"
-        required: false
-        default: true
-        type: boolean
+  # workflow_dispatch: 
+  #   inputs:
+  #     credential:
+  #       description: "username:password"
+  #       required: false
+  #       type: string
+  #     writable:
+  #       description: "Enable writable mode"
+  #       required: false
+  #       default: true
+  #       type: boolean
+  #     command:
+  #       description: "Command to run"
+  #       required: false
+  #       default: ""
+  #       type: string
+  #     enableUrlArg:
+  #       description: "Enable URL argument"
+  #       required: false
+  #       default: false
+  #       type: boolean
+  #     port:
+  #       description: "Port for ttyd server"
+  #       required: false
+  #       default: 7681
+  #       type: number
+  #     enableZmodem:
+  #       description: "Enable Zmodem support"
+  #       required: false
+  #       default: true
+  #       type: boolean
+  #     enableTrzsz:
+  #       description: "Enable Trzsz support"
+  #       required: false
+  #       default: true
+  #       type: boolean
+  #     enableSixel:
+  #       description: "Enable Sixel support"
+  #       required: false
+  #       default: true
+  #       type: boolean
 
 jobs:
   test:
@@ -63,14 +63,7 @@ jobs:
 
     - uses: ./
       with:
-        credential: ${{ inputs.credential || secrets.TTYD_CREDENTIAL }}
-        writable: ${{ inputs.writable }}
-        command: ${{ inputs.command }}
-        enableUrlArg: ${{ inputs.enableUrlArg }}
-        port: ${{ inputs.port }}
-        enableZmodem: ${{ inputs.enableZmodem }}
-        enableTrzsz:  ${{ inputs.enableTrzsz }}
-        enableSixel: ${{ inputs.enableSixel }}
+        credential: user:pass
 
     - name: Keep alive
       shell: bash
