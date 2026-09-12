@@ -13,7 +13,7 @@ inputs:
   command:
     description: "Command to run"
     required: false
-    default: ${{ runner.os == 'Windows' && 'powershell' || 'bash' }}
+    default: env
   enableUrlArg:
     description: "Enable URL argument"
     required: false
